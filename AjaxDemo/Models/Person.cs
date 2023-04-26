@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 
 namespace AjaxDemo.Models
 {
@@ -51,6 +52,30 @@ namespace AjaxDemo.Models
             cmd.Parameters.AddWithValue("@first", person.FirstName);
             cmd.Parameters.AddWithValue("@last", person.LastName);
             cmd.Parameters.AddWithValue("@age", person.Age);
+            connection.Open();
+            cmd.ExecuteNonQuery();
+        }
+
+        public void Delete(int id)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = "DELETE from People WHERE Id=@id";
+            cmd.Parameters.AddWithValue("@id",id);
+            connection.Open();
+            cmd.ExecuteNonQuery();
+        }
+
+        public void Edit(Person p)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = "UPDATE People SET FirstName=@firstname, LastName=@lastname, Age=@age WHERE id=@id";
+            cmd.Parameters.AddWithValue("@id", p.Id);
+            cmd.Parameters.AddWithValue("@firstname", p.FirstName);
+            cmd.Parameters.AddWithValue("@lastname", p.LastName);
+            cmd.Parameters.AddWithValue("@age", p.Age);
+
             connection.Open();
             cmd.ExecuteNonQuery();
         }

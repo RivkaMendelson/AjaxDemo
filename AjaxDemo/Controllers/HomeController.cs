@@ -26,5 +26,20 @@ namespace AjaxDemo.Controllers
             var repo = new PeopleRepo(_connectionString);
             repo.Add(person);
         }
+
+        [HttpPost]
+        public void Delete(int id)
+            {
+            var repo = new PeopleRepo(_connectionString);
+            repo.Delete(id);
+        }
+
+        [HttpPost]
+        public void Edit(Person p)
+        {
+
+            var repo = new PeopleRepo(_connectionString);
+            repo.Edit(p);
+        }
     }
 }
